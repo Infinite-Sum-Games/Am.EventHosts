@@ -24,9 +24,9 @@ export default function EventTableView() {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-hidden">
         {/* Header */}
-        <div className="border-b border-border bg-card p-6">
+        <div className="border-b border-border bg-card px-8 py-6">
           <h1 className="text-2xl font-semibold text-foreground">
             {selectedEvent ? selectedEvent.name : "Event Details"}
           </h1>
@@ -38,9 +38,9 @@ export default function EventTableView() {
         </div>
 
         {/* Table Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto px-8 py-6">
           {selectedEventId ? (
-            <TableTable />
+            <TableTable eventId={selectedEventId} />
           ) : (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               Select an event to view details

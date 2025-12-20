@@ -32,7 +32,7 @@ export function EventsSidebar({
   return (
     <div className="flex h-screen w-80 flex-col border-r border-border bg-card">
       {/* Header */}
-      <div className="border-b border-border p-6">
+      <div className="border-b border-border px-6 py-6">
         <h2 className="text-lg font-semibold text-foreground">Events</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Select an event to view details
@@ -41,7 +41,7 @@ export function EventsSidebar({
 
       {/* Events List */}
       <div className="flex-1 overflow-y-auto">
-        <div className="p-3 space-y-2">
+        <div className="p-4 space-y-2">
           {events.map((event) => (
             <button
               key={event.id}
@@ -68,7 +68,7 @@ export function EventsSidebar({
                 <Badge
                   variant="outline"
                   className={cn(
-                    "text-xs capitalize",
+                    "text-xs capitalize shrink-0",
                     getStatusColor(event.status)
                   )}
                 >

@@ -1,9 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useMemo, useState, useCallback } from "react";
-import { EllipsisIcon, Settings2, FunnelX } from "lucide-react";
+import { Settings2, Fuel as FunnelX } from "lucide-react";
 import {
-  type ColumnDef,
   createColumnHelper,
   getCoreRowModel,
   getPaginationRowModel,
@@ -24,7 +25,7 @@ import {
   type FilterFieldConfig,
 } from "@/components/ui/filters";
 import { Input } from "@/components/ui/input";
-import { tableData } from "@/data/draftData";
+import { eventParticipants } from "@/data/draftData";
 
 export interface TableData {
   teamName: string;
@@ -34,7 +35,12 @@ export interface TableData {
   city: string;
   amritaCBEStudent: boolean;
 }
-export default function TableTable() {
+
+interface TableTableProps {
+  eventId: string | null;
+}
+
+export default function TableTable({ eventId }: TableTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -161,6 +167,9 @@ export default function TableTable() {
     ],
     []
   );
+
+  const tableData = eventId ? eventParticipants[eventId] || [] : [];
+
   // Apply filters to data
   const filteredData = useMemo(() => {
     const data = tableData;
