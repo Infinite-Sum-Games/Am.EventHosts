@@ -24,7 +24,7 @@ import {
   type FilterFieldConfig,
 } from "@/components/ui/filters";
 import { Input } from "@/components/ui/input";
-import { draftData } from "./data";
+import { draftData } from "@/data/draftData";
 
 export interface DraftData {
   iD: number;
@@ -34,7 +34,7 @@ export interface DraftData {
   availability: string;
   location: string;
   joined: string;
-  balance($): number;
+  balance: number;
   avatar: string;
   flag: string;
   company: string;
@@ -141,7 +141,7 @@ export default function DraftTable() {
       enableResizing: true,
       enablePinning: true,
     }),
-    columnHelper.accessor("balance($)", {
+    columnHelper.accessor("balance", {
       header: ({ column }) => (
         <DataGridColumnHeader title="Balance ($)" column={column} />
       ),
