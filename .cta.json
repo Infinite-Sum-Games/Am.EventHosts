@@ -1,0 +1,20 @@
+{
+  "projectName": "anokha-2026-organizers",
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "bun",
+  "addOnOptions": {},
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "nitro",
+    "start",
+    "form",
+    "shadcn",
+    "store",
+    "table",
+    "tanstack-query"
+  ]
+}
