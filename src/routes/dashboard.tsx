@@ -1,13 +1,18 @@
+import { DashboardHeader } from "@/components/dashboard";
+import EventTableView from "@/components/event-table";
 import { createFileRoute } from "@tanstack/react-router";
-import DraftTable from "@/components/table";
 export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
 export function Dashboard() {
   return (
-    <div className="flex h-screen bg-background text-fuchsia-900">
-      <DraftTable />
+    <div className="flex h-screen flex-col bg-background">
+      <DashboardHeader />
+
+      <main className="flex-1 overflow-hidden">
+        <EventTableView />
+      </main>
     </div>
     );
 }
