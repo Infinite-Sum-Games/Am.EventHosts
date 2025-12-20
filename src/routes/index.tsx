@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
+import DraftTable from '@/components/table'
 export const Route = createFileRoute('/')({ component: App })
 
 function App() {
   return (
-    <div className="min-h-screen from-slate-900 via-slate-800 to-slate-900">
-      <p className='text-white'>Hellp</p>
-    </div>
+        <div className="flex h-screen bg-background text-fuchsia-900">
+          <DraftTable />
+        </div>
   )
 }

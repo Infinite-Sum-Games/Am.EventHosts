@@ -9,6 +9,5 @@ export function Dashboard() {
     <div className="flex h-screen bg-background text-fuchsia-900">
       <DraftTable />
     </div>
-
-  );
+    );
 }

@@ -5,7 +5,6 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import Header from "@/components/layout/Header";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { NotFound } from "./not-found";
 import appCss from "../styles.css?url";
@@ -49,7 +48,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Header />
         {children}
         <TanStackDevtools
           config={{
