@@ -16,14 +16,12 @@ export function EventsSidebar({
   selectedEventId,
   onEventSelect,
 }: EventsSidebarProps) {
-  const getStatusColor = (status: EventData["status"]) => {
+  const getStatusColor = (status: EventData["type"]) => {
     switch (status) {
-      case "upcoming":
+      case "group":
         return "bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20";
-      case "ongoing":
+      case "solo":
         return "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20";
-      case "completed":
-        return "bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20";
       default:
         return "bg-muted text-muted-foreground";
     }
@@ -70,10 +68,10 @@ export function EventsSidebar({
                   variant="outline"
                   className={cn(
                     "text-xs capitalize shrink-0 font-medium",
-                    getStatusColor(event.status)
+                    getStatusColor(event.type)
                   )}
                 >
-                  {event.status}
+                  {event.type}
                 </Badge>
               </div>
 

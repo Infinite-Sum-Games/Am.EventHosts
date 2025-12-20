@@ -12,7 +12,7 @@ export interface EventData {
   id: string;
   name: string;
   date: string;
-  status: "upcoming" | "ongoing" | "completed";
+  type: "group" | "solo";
   description: string;
 }
 
@@ -21,35 +21,35 @@ export const eventsData: EventData[] = [
     id: "event-1",
     name: "Tech Hackathon 2024",
     date: "2024-03-15",
-    status: "upcoming",
+    type: "group",
     description: "Annual tech hackathon event",
   },
   {
     id: "event-2",
     name: "AI Workshop",
     date: "2024-02-20",
-    status: "ongoing",
+    type: "solo",
     description: "Hands-on AI and ML workshop",
   },
   {
     id: "event-3",
     name: "Web Dev Bootcamp",
     date: "2024-01-10",
-    status: "completed",
+    type: "group",
     description: "Full-stack web development bootcamp",
   },
   {
     id: "event-4",
     name: "Data Science Summit",
     date: "2024-04-05",
-    status: "upcoming",
+    type:"group",
     description: "Industry experts sharing insights",
   },
   {
     id: "event-5",
     name: "Cybersecurity Training",
     date: "2024-02-28",
-    status: "ongoing",
+    type: "solo",
     description: "Security best practices training",
   },
 ];
