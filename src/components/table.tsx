@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useMemo, useState, useCallback } from "react";
-import { Settings2, Fuel as FunnelX } from "lucide-react";
+import { Settings2, Fuel as FunnelX, Search } from "lucide-react";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -54,7 +54,9 @@ export default function TableTable({ eventId }: TableTableProps) {
         <DataGridColumnHeader title="Team Name" column={column} />
       ),
       cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
+        <div className="font-medium text-foreground">
+          {String(getValue() || "")}
+        </div>
       ),
       size: 180,
       enableSorting: true,
@@ -67,7 +69,9 @@ export default function TableTable({ eventId }: TableTableProps) {
         <DataGridColumnHeader title="Student Name" column={column} />
       ),
       cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
+        <div className="font-medium text-foreground">
+          {String(getValue() || "")}
+        </div>
       ),
       size: 180,
       enableSorting: true,
@@ -79,8 +83,10 @@ export default function TableTable({ eventId }: TableTableProps) {
       header: ({ column }) => (
         <DataGridColumnHeader title="Email" column={column} />
       ),
-      cell: ({ getValue }) => <div>{String(getValue() || "")}</div>,
-      size: 180,
+      cell: ({ getValue }) => (
+        <div className="text-muted-foreground">{String(getValue() || "")}</div>
+      ),
+      size: 220,
       enableSorting: true,
       enableHiding: true,
       enableResizing: true,
@@ -91,9 +97,11 @@ export default function TableTable({ eventId }: TableTableProps) {
         <DataGridColumnHeader title="College" column={column} />
       ),
       cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
+        <div className="font-medium text-foreground">
+          {String(getValue() || "")}
+        </div>
       ),
-      size: 180,
+      size: 200,
       enableSorting: true,
       enableHiding: true,
       enableResizing: true,
@@ -104,9 +112,9 @@ export default function TableTable({ eventId }: TableTableProps) {
         <DataGridColumnHeader title="City" column={column} />
       ),
       cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
+        <div className="text-foreground">{String(getValue() || "")}</div>
       ),
-      size: 180,
+      size: 150,
       enableSorting: true,
       enableHiding: true,
       enableResizing: true,
@@ -116,8 +124,19 @@ export default function TableTable({ eventId }: TableTableProps) {
       header: ({ column }) => (
         <DataGridColumnHeader title="Amrita CBE Student" column={column} />
       ),
-      cell: ({ getValue }) => <Badge>{getValue() ? "YES" : "NO"}</Badge>,
-      size: 180,
+      cell: ({ getValue }) => (
+        <Badge
+          variant={getValue() ? "primary" : "secondary"}
+          className={
+            getValue()
+              ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
+              : ""
+          }
+        >
+          {getValue() ? "YES" : "NO"}
+        </Badge>
+      ),
+      size: 160,
       enableSorting: true,
       enableHiding: true,
       enableResizing: true,
@@ -128,41 +147,41 @@ export default function TableTable({ eventId }: TableTableProps) {
     () => [
       {
         key: "teamName",
-        label: "teamName",
+        label: "Team Name",
         type: "text",
-        placeholder: "Filter by teamname...",
+        placeholder: "Filter by team name...",
       },
       {
         key: "studentName",
-        label: "studentName",
+        label: "Student Name",
         type: "text",
-        placeholder: "Filter by studentname...",
+        placeholder: "Filter by student name...",
       },
       {
         key: "email",
-        label: "email",
+        label: "Email",
         type: "email",
         placeholder: "Filter by email...",
       },
       {
         key: "college",
-        label: "college",
+        label: "College",
         type: "text",
         placeholder: "Filter by college...",
       },
       {
         key: "city",
-        label: "city",
+        label: "City",
         type: "text",
         placeholder: "Filter by city...",
       },
       {
         key: "amritaCBEStudent",
-        label: "amritaCBEStudent",
+        label: "Amrita CBE Student",
         type: "boolean",
-        placeholder: "Filter by amritacbestudent...",
-        onLabel: "True",
-        offLabel: "False",
+        placeholder: "Filter by student status...",
+        onLabel: "Yes",
+        offLabel: "No",
       },
     ],
     []
@@ -254,6 +273,7 @@ export default function TableTable({ eventId }: TableTableProps) {
     });
     return filtered;
   }, [filters, tableData]);
+
   const handleFiltersChange = useCallback((filters: Filter[]) => {
     setFilters(filters);
     setPagination((prev) => ({
@@ -261,6 +281,7 @@ export default function TableTable({ eventId }: TableTableProps) {
       pageIndex: 0,
     }));
   }, []);
+
   const table = useReactTable({
     columns,
     data: filteredData,
@@ -277,6 +298,7 @@ export default function TableTable({ eventId }: TableTableProps) {
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
+
   return (
     <DataGrid
       table={table}
@@ -290,50 +312,71 @@ export default function TableTable({ eventId }: TableTableProps) {
         columnsVisibility: true,
       }}
     >
-      <div className="w-full space-y-2.5">
-        <div>
-          <Input
-            className="peer min-w-60 h-8"
-            value={(table.getState().globalFilter ?? "") as string}
-            onChange={(e) => table.setGlobalFilter(e.target.value)}
-            placeholder="Search all columns..."
-            type="text"
-            aria-label="Search all columns"
-          />
-        </div>
-
+      <div className="w-full space-y-4">
         <div className="flex items-center gap-3">
-          <DataGridColumnVisibility
-            table={table}
-            trigger={
-              <Button variant="outline" size="sm">
-                <Settings2 />
-                View
-              </Button>
-            }
-          />
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              className="pl-9 h-9 bg-card/50 border-border focus:border-amber-500/50 focus:ring-amber-500/20"
+              value={(table.getState().globalFilter ?? "") as string}
+              onChange={(e) => table.setGlobalFilter(e.target.value)}
+              placeholder="Search all columns..."
+              type="text"
+              aria-label="Search all columns"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <DataGridColumnVisibility
+              table={table}
+              trigger={
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 border-border hover:bg-accent/50 hover:border-amber-500/30 bg-transparent"
+                >
+                  <Settings2 className="h-4 w-4 mr-2" />
+                  View
+                </Button>
+              }
+            />
+          </div>
         </div>
 
-        <div className="flex-1">
-          <Filters
-            filters={filters}
-            fields={filterFields}
-            variant="outline"
-            onChange={handleFiltersChange}
-          />
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex-1">
+            <Filters
+              filters={filters}
+              fields={filterFields}
+              variant="outline"
+              onChange={handleFiltersChange}
+            />
+          </div>
+          {filters.length > 0 && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setFilters([])}
+              className="h-9 border-border hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
+            >
+              <FunnelX className="h-4 w-4 mr-2" />
+              Clear Filters
+            </Button>
+          )}
         </div>
-        {filters.length > 0 && (
-          <Button variant="outline" onClick={() => setFilters([])}>
-            <FunnelX /> Clear
-          </Button>
-        )}
-        <DataGridContainer>
-          <ScrollArea>
-            <DataGridTable />
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </DataGridContainer>
-        <DataGridPagination />
+
+        <div className="rounded-lg border border-border bg-card/30 overflow-hidden">
+          <DataGridContainer>
+            <ScrollArea>
+              <DataGridTable />
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          </DataGridContainer>
+        </div>
+
+        <div className="pt-2">
+          <DataGridPagination />
+        </div>
       </div>
     </DataGrid>
   );
