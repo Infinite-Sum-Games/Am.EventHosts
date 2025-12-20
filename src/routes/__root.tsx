@@ -1,31 +1,70 @@
-import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
-import type { QueryClient } from "@tanstack/react-query";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
+import {
+  HeadContent,
+  Scripts,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import Header from "@/components/layout/Header";
+import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { NotFound } from "./not-found";
-export type RouterContext = {
-  queryClient: QueryClient;
-  user: null; // auth-ready, injected later
-};
+import appCss from "../styles.css?url";
 
-function RootError({ error }: { error: Error }) {
-  return (
-    <div className="p-6">
-      <h1 className="text-xl font-semibold text-destructive">
-        Something went wrong
-      </h1>
-      <pre className="mt-2 text-sm opacity-70">{error.message}</pre>
-    </div>
-  );
+import type { QueryClient } from "@tanstack/react-query";
+
+interface MyRouterContext {
+  queryClient: QueryClient;
 }
 
-export const Route = createRootRouteWithContext<RouterContext>()({
-  component: () => (
-    <ThemeProvider defaultTheme="dark" attribute="class">
-      <Outlet />
-      <Toaster position="top-center" />
-    </ThemeProvider>
-  ),
+export const Route = createRootRouteWithContext<MyRouterContext>()({
   notFoundComponent: NotFound,
-  errorComponent: RootError,
+  head: () => ({
+    meta: [
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
+        title: "TanStack Start Starter",
+      },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
+      },
+    ],
+  }),
+
+  shellComponent: RootDocument,
 });
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        <Header />
+        {children}
+        <TanStackDevtools
+          config={{
+            position: "bottom-right",
+          }}
+          plugins={[
+            {
+              name: "Tanstack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+            TanStackQueryDevtools,
+          ]}
+        />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
