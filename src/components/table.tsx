@@ -314,7 +314,7 @@ export default function TableTable({ eventId }: TableTableProps) {
     >
       <div className="w-full space-y-4">
         <div className="flex items-center gap-3">
-          <div className="relative flex-1 max-w-sm">
+          {/* <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               className="pl-9 h-9 bg-card/50 border-border focus:border-amber-500/50 focus:ring-amber-500/20"
@@ -324,7 +324,7 @@ export default function TableTable({ eventId }: TableTableProps) {
               type="text"
               aria-label="Search all columns"
             />
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-2">
             <DataGridColumnVisibility
@@ -341,28 +341,27 @@ export default function TableTable({ eventId }: TableTableProps) {
               }
             />
           </div>
-        </div>
-
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex-1">
-            <Filters
-              filters={filters}
-              fields={filterFields}
-              variant="outline"
-              onChange={handleFiltersChange}
-            />
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex-1">
+              <Filters
+                filters={filters}
+                fields={filterFields}
+                variant="outline"
+                onChange={handleFiltersChange}
+              />
+            </div>
+            {filters.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setFilters([])}
+                className="h-9 border-border hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
+              >
+                <FunnelX className="h-4 w-4 mr-2" />
+                Clear Filters
+              </Button>
+            )}
           </div>
-          {filters.length > 0 && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setFilters([])}
-              className="h-9 border-border hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
-            >
-              <FunnelX className="h-4 w-4 mr-2" />
-              Clear Filters
-            </Button>
-          )}
         </div>
 
         <div className="rounded-lg border border-border bg-card/30 overflow-hidden">
