@@ -24,51 +24,41 @@ import {
   type FilterFieldConfig,
 } from "@/components/ui/filters";
 import { Input } from "@/components/ui/input";
-import { draftData } from "@/data/draftData";
+import { tableData } from "@/data/draftData";
 
-export interface DraftData {
-  iD: number;
-  name: string;
+export interface TableData {
+  teamName: string;
+  studentName: string;
   email: string;
-  status: string;
-  availability: string;
-  location: string;
-  joined: string;
-  balance: number;
-  avatar: string;
-  flag: string;
-  company: string;
-  role: string;
+  college: string;
+  city: string;
+  amritaCBEStudent: boolean;
 }
-export default function DraftTable() {
+export default function TableTable() {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
-  const columnHelper = createColumnHelper<DraftData>();
+  const columnHelper = createColumnHelper<TableData>();
   const columns = [
-    columnHelper.accessor("iD", {
+    columnHelper.accessor("teamName", {
       header: ({ column }) => (
-        <DataGridColumnHeader title="ID" column={column} />
+        <DataGridColumnHeader title="Team Name" column={column} />
       ),
-      cell: ({ getValue }) => <div>{getValue().toLocaleString()}</div>,
+      cell: ({ getValue }) => (
+        <div className="font-medium">{String(getValue() || "")}</div>
+      ),
       size: 180,
       enableSorting: true,
       enableHiding: true,
       enableResizing: true,
       enablePinning: true,
-      filterFn: (row, columnId, filterValue) => {
-        if (!filterValue) return true;
-        const [min, max] = filterValue;
-        const value = Number(row.getValue(columnId));
-        return value >= min && value <= max;
-      },
     }),
-    columnHelper.accessor("name", {
+    columnHelper.accessor("studentName", {
       header: ({ column }) => (
-        <DataGridColumnHeader title="Name" column={column} />
+        <DataGridColumnHeader title="Student Name" column={column} />
       ),
       cell: ({ getValue }) => (
         <div className="font-medium">{String(getValue() || "")}</div>
@@ -90,31 +80,9 @@ export default function DraftTable() {
       enableResizing: true,
       enablePinning: true,
     }),
-    columnHelper.accessor("status", {
+    columnHelper.accessor("college", {
       header: ({ column }) => (
-        <DataGridColumnHeader title="Status" column={column} />
-      ),
-      cell: ({ getValue }) => <div>{String(getValue() || "")}</div>,
-      size: 180,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-    }),
-    columnHelper.accessor("availability", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Availability" column={column} />
-      ),
-      cell: ({ getValue }) => <div>{String(getValue() || "")}</div>,
-      size: 180,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-    }),
-    columnHelper.accessor("location", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Location" column={column} />
+        <DataGridColumnHeader title="College" column={column} />
       ),
       cell: ({ getValue }) => (
         <div className="font-medium">{String(getValue() || "")}</div>
@@ -125,42 +93,9 @@ export default function DraftTable() {
       enableResizing: true,
       enablePinning: true,
     }),
-    columnHelper.accessor("joined", {
+    columnHelper.accessor("city", {
       header: ({ column }) => (
-        <DataGridColumnHeader title="Joined" column={column} />
-      ),
-      cell: ({ getValue }) =>
-        getValue() ? (
-          <div>{new Date(getValue()).toLocaleDateString()}</div>
-        ) : (
-          <div></div>
-        ),
-      size: 180,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-    }),
-    columnHelper.accessor("balance", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Balance ($)" column={column} />
-      ),
-      cell: ({ getValue }) => <div>{getValue().toLocaleString()}</div>,
-      size: 180,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-      filterFn: (row, columnId, filterValue) => {
-        if (!filterValue) return true;
-        const [min, max] = filterValue;
-        const value = Number(row.getValue(columnId));
-        return value >= min && value <= max;
-      },
-    }),
-    columnHelper.accessor("avatar", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Avatar" column={column} />
+        <DataGridColumnHeader title="City" column={column} />
       ),
       cell: ({ getValue }) => (
         <div className="font-medium">{String(getValue() || "")}</div>
@@ -171,39 +106,11 @@ export default function DraftTable() {
       enableResizing: true,
       enablePinning: true,
     }),
-    columnHelper.accessor("flag", {
+    columnHelper.accessor("amritaCBEStudent", {
       header: ({ column }) => (
-        <DataGridColumnHeader title="Flag" column={column} />
+        <DataGridColumnHeader title="Amrita CBE Student" column={column} />
       ),
-      cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
-      ),
-      size: 180,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-    }),
-    columnHelper.accessor("company", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Company" column={column} />
-      ),
-      cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
-      ),
-      size: 180,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-    }),
-    columnHelper.accessor("role", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Role" column={column} />
-      ),
-      cell: ({ getValue }) => (
-        <div className="font-medium">{String(getValue() || "")}</div>
-      ),
+      cell: ({ getValue }) => <Badge>{getValue() ? "YES" : "NO"}</Badge>,
       size: 180,
       enableSorting: true,
       enableHiding: true,
@@ -214,16 +121,16 @@ export default function DraftTable() {
   const filterFields = useMemo<FilterFieldConfig[]>(
     () => [
       {
-        key: "iD",
-        label: "iD",
-        type: "number",
-        placeholder: "Filter by id...",
+        key: "teamName",
+        label: "teamName",
+        type: "text",
+        placeholder: "Filter by teamname...",
       },
       {
-        key: "name",
-        label: "name",
+        key: "studentName",
+        label: "studentName",
         type: "text",
-        placeholder: "Filter by name...",
+        placeholder: "Filter by studentname...",
       },
       {
         key: "email",
@@ -232,97 +139,31 @@ export default function DraftTable() {
         placeholder: "Filter by email...",
       },
       {
-        key: "status",
-        label: "status",
-        type: "select",
-        placeholder: "Filter by status...",
-        options: [
-          {
-            label: "active",
-            value: "active",
-          },
-          {
-            label: "inactive",
-            value: "inactive",
-          },
-        ],
-        searchable: true,
-        className: "w-[160px]",
-      },
-      {
-        key: "availability",
-        label: "availability",
-        type: "select",
-        placeholder: "Filter by availability...",
-        options: [
-          {
-            label: "online",
-            value: "online",
-          },
-          {
-            label: "away",
-            value: "away",
-          },
-          {
-            label: "busy",
-            value: "busy",
-          },
-          {
-            label: "offline",
-            value: "offline",
-          },
-        ],
-        searchable: true,
-        className: "w-[160px]",
-      },
-      {
-        key: "location",
-        label: "location",
+        key: "college",
+        label: "college",
         type: "text",
-        placeholder: "Filter by location...",
+        placeholder: "Filter by college...",
       },
       {
-        key: "joined",
-        label: "joined",
-        type: "date",
-        placeholder: "Filter by joined...",
-      },
-      {
-        key: "balance($)",
-        label: "balance($)",
-        type: "number",
-        placeholder: "Filter by balance($)...",
-      },
-      {
-        key: "avatar",
-        label: "avatar",
+        key: "city",
+        label: "city",
         type: "text",
-        placeholder: "Filter by avatar...",
+        placeholder: "Filter by city...",
       },
       {
-        key: "flag",
-        label: "flag",
-        type: "text",
-        placeholder: "Filter by flag...",
-      },
-      {
-        key: "company",
-        label: "company",
-        type: "text",
-        placeholder: "Filter by company...",
-      },
-      {
-        key: "role",
-        label: "role",
-        type: "text",
-        placeholder: "Filter by role...",
+        key: "amritaCBEStudent",
+        label: "amritaCBEStudent",
+        type: "boolean",
+        placeholder: "Filter by amritacbestudent...",
+        onLabel: "True",
+        offLabel: "False",
       },
     ],
     []
   );
   // Apply filters to data
   const filteredData = useMemo(() => {
-    const data = draftData;
+    const data = tableData;
     let filtered = [...data];
     // Filter out empty filters before applying
     const activeFilters = filters.filter((filter) => {
@@ -349,7 +190,7 @@ export default function DraftTable() {
     activeFilters.forEach((filter) => {
       const { field, operator, values } = filter;
       filtered = filtered.filter((item) => {
-        const fieldValue = item[field as keyof DraftData];
+        const fieldValue = item[field as keyof TableData];
         switch (operator) {
           case "is":
             return values.some((value) => String(value) === String(fieldValue));
@@ -385,32 +226,6 @@ export default function DraftTable() {
             return String(fieldValue) === String(values[0]);
           case "not_equals":
             return String(fieldValue) !== String(values[0]);
-          case "greater_than":
-            return Number(fieldValue) > Number(values[0]);
-          case "less_than":
-            return Number(fieldValue) < Number(values[0]);
-          case "greater_than_or_equal":
-            return Number(fieldValue) >= Number(values[0]);
-          case "less_than_or_equal":
-            return Number(fieldValue) <= Number(values[0]);
-          case "between":
-            if (values.length >= 2) {
-              const min = Number(values[0]);
-              const max = Number(values[1]);
-              return Number(fieldValue) >= min && Number(fieldValue) <= max;
-            }
-            return true;
-          case "not_between":
-            if (values.length >= 2) {
-              const min = Number(values[0]);
-              const max = Number(values[1]);
-              return Number(fieldValue) < min || Number(fieldValue) > max;
-            }
-            return true;
-          case "before":
-            return new Date(String(fieldValue)) < new Date(String(values[0]));
-          case "after":
-            return new Date(String(fieldValue)) > new Date(String(values[0]));
           case "empty":
             return (
               fieldValue === null ||
@@ -429,7 +244,7 @@ export default function DraftTable() {
       });
     });
     return filtered;
-  }, [filters, draftData]);
+  }, [filters, tableData]);
   const handleFiltersChange = useCallback((filters: Filter[]) => {
     setFilters(filters);
     setPagination((prev) => ({
