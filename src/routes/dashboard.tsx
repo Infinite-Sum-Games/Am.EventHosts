@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard")({
@@ -5,6 +6,7 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 export function Dashboard() {
+  const queryClient = useQueryClient();
   return (
     <div className="flex h-screen bg-background text-fuchsia-900">
       <p>HI</p>
