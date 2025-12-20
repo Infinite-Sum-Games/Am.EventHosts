@@ -1,5 +1,5 @@
 export interface TableData {
-  teamName: string;
+  teamName?: string;
   studentName: string;
   email: string;
   college: string;
@@ -43,13 +43,13 @@ export const eventsData: EventData[] = [
     name: "Data Science Summit",
     date: "2024-04-05",
     type:"group",
-    description: "Industry experts sharing insights",
+    description: "Industry experts sharing insights", 
   },
   {
     id: "event-5",
     name: "Cybersecurity Training",
     date: "2024-02-28",
-    type: "solo",
+    type: "solo",                                                // is_group
     description: "Security best practices training",
   },
 ];
