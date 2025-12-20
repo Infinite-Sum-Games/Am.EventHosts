@@ -4,7 +4,7 @@ import { EventsSidebar } from "./event-sidebar";
 import TableTable from "@/components/table";
 import { eventsData } from "@/data/draftData";
 import { Users, Calendar } from "lucide-react";
-
+import { eventParticipants } from "@/data/draftData";
 export default function EventTableView() {
   const [selectedEventId, setSelectedEventId] = useState<string | null>(
     eventsData[0]?.id || null
@@ -21,21 +21,19 @@ export default function EventTableView() {
         selectedEventId={selectedEventId}
         onEventSelect={setSelectedEventId}
       />
-
-      {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
-        <div className="border-b border-border bg-card/30 backdrop-blur-sm px-8 py-6">
+        <div className=" bg-card/30 backdrop-blur-sm px-8 py-6">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20">
-                  <Calendar className="h-5 w-5 text-amber-400" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10 border-amber-500/20">
+                  <Calendar className="h-5 w-5 text-amber-200" />
                 </div>
-                <h1 className="text-2xl font-semibold text-foreground">
+                <h1 className="text-3xl font-semibold text-foreground">
                   {selectedEvent ? selectedEvent.name : "Event Details"}
                 </h1>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed ml-13">
+              <p className="text-md text-muted-foreground leading-relaxed ml-13">
                 {selectedEvent
                   ? selectedEvent.description
                   : "Select an event from the sidebar to view participant details and manage registrations"}
@@ -43,8 +41,8 @@ export default function EventTableView() {
             </div>
             {selectedEvent && (
               <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card/50 border border-border">
-                <Users className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-foreground">
+                <Users className="h-6 w-6 text-amber-400" />
+                <span className="text-md font-medium text-foreground">
                   {(eventParticipants[selectedEvent.id] || []).length}{" "}
                   Participants
                 </span>
@@ -76,5 +74,4 @@ export default function EventTableView() {
   );
 }
 
-// Import for participant count
-import { eventParticipants } from "@/data/draftData";
+
