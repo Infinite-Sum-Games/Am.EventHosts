@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { EventsSidebar } from "./event-sidebar";
 import TableTable from "@/components/table";
