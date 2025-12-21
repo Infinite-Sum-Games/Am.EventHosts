@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import secureLocalStorage from "react-secure-storage";
 import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
+import { useRouter } from "@tanstack/react-router";
 export function DashboardHeader() {
-  
+  const router = useRouter();
   return (
     <header className="h-20 md:h-24 border-b border-border bg-card/50 backdrop-blur-md sticky top-0 z-50 transition-all">
       <div className="relative flex h-full items-center justify-between px-4 md:px-8">
