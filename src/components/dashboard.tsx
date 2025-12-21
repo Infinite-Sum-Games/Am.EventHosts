@@ -2,7 +2,11 @@
 
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import secureLocalStorage from "react-secure-storage";
+import { axiosClient } from "@/lib/axios";
+import { api } from "@/lib/api";
 export function DashboardHeader() {
+  
   return (
     <header className="h-20 md:h-24 border-b border-border bg-card/50 backdrop-blur-md sticky top-0 z-50 transition-all">
       <div className="relative flex h-full items-center justify-between px-4 md:px-8">
@@ -30,7 +34,16 @@ export function DashboardHeader() {
             size="lg"
             className="text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all px-2 md:px-4 border"
           >
-            <LogOut className="h-8 w-8 md:mr-2" />
+            <LogOut
+              className="h-8 w-8 md:mr-2"
+              onClick={(e) => {
+                e.preventDefault();
+                secureLocalStorage.clear();
+                axiosClient.get(api.LOGOUT).then(() => {
+                  router.navigate({ to: "/", replace: true });
+                });
+              }}
+            />
             <span className="hidden md:inline">Logout</span>
           </Button>
         </div>
