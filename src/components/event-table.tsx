@@ -1,10 +1,9 @@
 "use client";
-
 import { useMemo, useState } from "react";
 import { EventsSidebar } from "./event-sidebar";
 // import GroupEventTable from "@/components/group-event-table";
 // import SoloEventTable from "@/components/solo-event-table";
-import { EventData, eventsData, eventParticipants } from "@/data/draftData";
+import { eventsData, eventParticipants } from "@/data/draftData";
 import { Users, Calendar } from "lucide-react";
 import TableTable from "./table";
 import SoloTable from "./solotable";
