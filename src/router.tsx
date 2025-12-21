@@ -13,6 +13,7 @@ export const getRouter = () => {
     routeTree,
     context: { ...rqContext },
     defaultPreload: "intent",
+    basepath: "/live",
   });
 
   setupRouterSsrQueryIntegration({

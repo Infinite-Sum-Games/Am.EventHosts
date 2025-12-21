@@ -36,12 +36,12 @@ export function LoginForm({
     setLoading(true);
     setErrorMsg("");
 
-    // const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
     try {
       const response = await axiosClient.post(api.LOGIN, {
         email: email,
-        password: password,
+        password: hashedPassword,
       });
 
       const data = response.data;
@@ -53,7 +53,7 @@ export function LoginForm({
         userEmail: data.email,
       };
       secureLocalStorage.setItem("u", JSON.stringify(userInfo));
-
+      await new Promise((res) => setTimeout(res, 50));
       router.navigate({ to: "/dashboard", replace: true });
     } catch (err: any) {
       setErrorMsg(
