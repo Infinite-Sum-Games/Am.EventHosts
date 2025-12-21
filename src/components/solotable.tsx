@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/filters";
 import { Input } from "@/components/ui/input";
 import { eventParticipants } from "@/data/draftData";
+import { Participant } from "@/services/organizer";
 
 export interface TableData {
   studentName: string;
@@ -37,9 +38,10 @@ export interface TableData {
 
 interface TableTableProps {
   eventId: string | null;
+  participants: Participant[];
 }
 
-export default function SoloTable({ eventId }: TableTableProps) {
+export default function SoloTable({ eventId,participants}: TableTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -47,6 +49,18 @@ export default function SoloTable({ eventId }: TableTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
   const columnHelper = createColumnHelper<TableData>();
+
+  const tableData: TableData[] = useMemo(() => {
+    return (participants || []).map((p) => ({
+      studentName: p.student_name,
+      email: p.email,
+      college: p.college,
+      city: p.city,
+      amritaCBEStudent: p.is_amrita_student,
+    }));
+  }, [participants]);
+
+
   const columns = [
     // columnHelper.accessor("teamName", {
     //   header: ({ column }) => (
@@ -186,7 +200,7 @@ export default function SoloTable({ eventId }: TableTableProps) {
     []
   );
 
-  const tableData = eventId ? eventParticipants[eventId] || [] : [];
+    // const tableData = participants || [];
 
   // Apply filters to data
   const filteredData = useMemo(() => {

@@ -2,7 +2,7 @@ import axios from "axios";
 import secureLocalStorage from "react-secure-storage";
 
 export const axiosClient = axios.create({
-  baseURL: "/",
+  baseURL: "/api/v1",
   withCredentials: true,
 });
 axiosClient.interceptors.request.use((config) => {

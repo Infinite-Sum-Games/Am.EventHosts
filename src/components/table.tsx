@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/filters";
 import { Input } from "@/components/ui/input";
 import { eventParticipants } from "@/data/draftData";
+import { Participant } from "@/services/organizer";
 
 export interface TableData {
   teamName: string;
@@ -38,9 +39,10 @@ export interface TableData {
 
 interface TableTableProps {
   eventId: string | null;
+  participants: Participant[];
 }
 
-export default function TableTable({ eventId }: TableTableProps) {
+export default function TableTable({ eventId,participants }: TableTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -187,7 +189,7 @@ export default function TableTable({ eventId }: TableTableProps) {
     []
   );
 
-  const tableData = eventId ? eventParticipants[eventId] || [] : [];
+  const tableData = participants || [];
 
   // Apply filters to data
   const filteredData = useMemo(() => {

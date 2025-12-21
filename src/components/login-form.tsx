@@ -36,12 +36,12 @@ export function LoginForm({
     setLoading(true);
     setErrorMsg("");
 
-    const hashedPassword = await hashPassword(password);
+    // const hashedPassword = await hashPassword(password);
 
     try {
       const response = await axiosClient.post(api.LOGIN, {
         email: email,
-        password: hashedPassword,
+        password: password,
       });
 
       const data = response.data;

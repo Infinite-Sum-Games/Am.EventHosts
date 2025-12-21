@@ -1,34 +1,119 @@
 "use client";
-import { useMemo, useState } from "react";
+
+import { useEffect, useState, useMemo } from "react";
 import { EventsSidebar } from "./event-sidebar";
-// import GroupEventTable from "@/components/group-event-table";
-// import SoloEventTable from "@/components/solo-event-table";
-import { eventsData, eventParticipants } from "@/data/draftData";
-import { Users, Calendar } from "lucide-react";
 import TableTable from "./table";
 import SoloTable from "./solotable";
+import { Users, Calendar } from "lucide-react";
+import { axiosClient } from "@/lib/axios";
+import { api } from "@/lib/api";
+import type { Participant } from "@/services/organizer";
+
+interface BackendEvent {
+  id: string;
+  name: string;
+  is_group: "SOLO" | "GROUP";
+}
 
 export default function EventTableView() {
+  const [events, setEvents] = useState<BackendEvent[]>([]);
+  const [participants, setParticipants] = useState<
+    Record<string, Participant[]>
+  >({});
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch organizer events
+  useEffect(() => {
+    async function fetchEvents() {
+      console.log("[EventTableView] Fetching events...");
+      try {
+        setLoading(true);
+        const response = await axiosClient.get(api.DASHBOARD);
+        const backendEvents: BackendEvent[] = response.data.events || [];
+        console.log("[EventTableView] Events fetched:", backendEvents);
+        setEvents(backendEvents);
+
+        // Initialize participants map
+        const initialParticipants: Record<string, Participant[]> = {};
+        backendEvents.forEach((ev) => {
+          initialParticipants[ev.id] = [];
+        });
+        console.log(
+          "[EventTableView] Initialized participants map:",
+          initialParticipants
+        );
+        setParticipants(initialParticipants);
+      } catch (err) {
+        console.error("[EventTableView] Failed to fetch events:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
+  // Fetch participants for a selected event
+  useEffect(() => {
+    if (!selectedEventId) {
+      console.log("[EventTableView] No event selected, skipping fetch.");
+      return;
+    }
+
+
+
+
+    async function fetchParticipants() {
+      console.log(
+        `[EventTableView] Fetching participants for eventId=${selectedEventId}...`
+      );
+      try {
+        const response = await axiosClient.get(
+          api.PARTICIPANTS(selectedEventId)
+        );
+        const data: Participant[] = response.data.participants || [];
+        console.log(
+          `[EventTableView] Participants fetched for ${selectedEventId}:`,
+          data
+        );
+        setParticipants((prev) => ({ ...prev, [selectedEventId]: data }));
+      } catch (err) {
+        console.error(
+          `[EventTableView] Failed to fetch participants for ${selectedEventId}:`,
+          err
+        );
+      }
+    }
+
+    fetchParticipants();
+  }, [selectedEventId]);
+  
 
   const selectedEvent = useMemo(
-    () => eventsData.find((e) => e.id === selectedEventId) ?? null,
-    [selectedEventId]
+    () => events.find((e) => e.id === selectedEventId) ?? null,
+    [events, selectedEventId]
   );
+
+  console.log("[EventTableView] Selected Event:", selectedEvent);
 
   return (
     <div className="flex h-full bg-background">
       {/* Sidebar */}
       <EventsSidebar
-        events={eventsData}
+        events={events}
+        participants={participants}
         selectedEventId={selectedEventId}
-        onEventSelect={setSelectedEventId}
+        onEventSelect={(id) => {
+          console.log("[EventTableView] Event selected:", id);
+          setSelectedEventId(id);
+        }}
       />
 
       {/* Main Panel */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Header */}
-        <div className="bg-card/30 backdrop-blur-sm px-8 py-6 ">
+        <div className="bg-card/30 backdrop-blur-sm px-8 py-6">
           <div className="flex items-start justify-between gap-6">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
@@ -42,31 +127,29 @@ export default function EventTableView() {
 
               <p className="text-muted-foreground max-w-3xl">
                 {selectedEvent
-                  ? selectedEvent.description
-                  : "Select an event from the sidebar to view participant details and manage registrations"}
+                  ? `Participants: ${participants[selectedEvent.id]?.length || 0}`
+                  : "Select an event from the sidebar to view participant details and manage registrations."}
               </p>
             </div>
-
-            {selectedEvent && (
-              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card/50 border">
-                <Users className="h-5 w-5 text-amber-400" />
-                <span className="font-medium">
-                  {(eventParticipants[selectedEvent.id] || []).length}{" "}
-                  Participants
-                </span>
-              </div>
-            )}
           </div>
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-auto px-8 py-6">
-          {!selectedEvent ? (
+          {loading ? (
+            <p className="text-center text-muted-foreground">Loading...</p>
+          ) : !selectedEvent ? (
             <EmptyState />
-          ) : selectedEvent.type === "group" ? (
-            <TableTable eventId={selectedEvent.id} />
+          ) : selectedEvent.is_group === "GROUP" ? (
+            <TableTable
+              eventId={selectedEvent.id}
+              participants={participants[selectedEvent.id]}
+            />
           ) : (
-            <SoloTable eventId={selectedEvent.id} />
+            <SoloTable
+              eventId={selectedEvent.id}
+              participants={participants[selectedEvent.id]}
+            />
           )}
         </div>
       </div>
@@ -74,8 +157,8 @@ export default function EventTableView() {
   );
 }
 
-
 function EmptyState() {
+  console.log("[EventTableView] Rendering EmptyState");
   return (
     <div className="flex flex-col items-center justify-center h-full text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 border border-amber-500/20 mb-4">
