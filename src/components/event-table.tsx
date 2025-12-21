@@ -26,23 +26,17 @@ export default function EventTableView() {
   // Fetch organizer events
   useEffect(() => {
     async function fetchEvents() {
-      console.log("[EventTableView] Fetching events...");
       try {
         setLoading(true);
         const response = await axiosClient.get(api.DASHBOARD);
         const backendEvents: BackendEvent[] = response.data.events || [];
-        console.log("[EventTableView] Events fetched:", backendEvents);
         setEvents(backendEvents);
 
-        // Initialize participants map
+        // Initialize every event with empty array for participants
         const initialParticipants: Record<string, Participant[]> = {};
         backendEvents.forEach((ev) => {
           initialParticipants[ev.id] = [];
         });
-        console.log(
-          "[EventTableView] Initialized participants map:",
-          initialParticipants
-        );
         setParticipants(initialParticipants);
       } catch (err) {
         console.error("[EventTableView] Failed to fetch events:", err);
@@ -57,32 +51,19 @@ export default function EventTableView() {
   // Fetch participants for a selected event
   useEffect(() => {
     if (!selectedEventId) {
-      console.log("[EventTableView] No event selected, skipping fetch.");
       return;
     }
 
-
-
+    const id = selectedEventId;
 
     async function fetchParticipants() {
-      console.log(
-        `[EventTableView] Fetching participants for eventId=${selectedEventId}...`
-      );
       try {
         const response = await axiosClient.get(
-          api.PARTICIPANTS(selectedEventId)
+          api.PARTICIPANTS(id)
         );
         const data: Participant[] = response.data.participants || [];
-        console.log(
-          `[EventTableView] Participants fetched for ${selectedEventId}:`,
-          data
-        );
-        setParticipants((prev) => ({ ...prev, [selectedEventId]: data }));
+        setParticipants((prev) => ({ ...prev, [id]: data }));
       } catch (err) {
-        console.error(
-          `[EventTableView] Failed to fetch participants for ${selectedEventId}:`,
-          err
-        );
       }
     }
 
@@ -95,8 +76,6 @@ export default function EventTableView() {
     [events, selectedEventId]
   );
 
-  console.log("[EventTableView] Selected Event:", selectedEvent);
-
   return (
     <div className="flex h-full bg-background">
       {/* Sidebar */}
@@ -105,7 +84,6 @@ export default function EventTableView() {
         participants={participants}
         selectedEventId={selectedEventId}
         onEventSelect={(id) => {
-          console.log("[EventTableView] Event selected:", id);
           setSelectedEventId(id);
         }}
       />
@@ -158,7 +136,6 @@ export default function EventTableView() {
 }
 
 function EmptyState() {
-  console.log("[EventTableView] Rendering EmptyState");
   return (
     <div className="flex flex-col items-center justify-center h-full text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 border border-amber-500/20 mb-4">

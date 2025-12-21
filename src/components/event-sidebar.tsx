@@ -12,12 +12,12 @@ interface BackendEvent {
 
 interface Participant {
   // same as your Participant type
-  teamName?: string;
-  studentName: string;
+  team_name?: string;
+  student_name: string;
   email: string;
   college: string;
   city: string;
-  amritaCBEStudent?: boolean;
+  is_amrita_student: any;
 }
 
 interface EventsSidebarProps {

@@ -8,12 +8,13 @@ export interface Event {
 }
 
 export interface Participant {
-  teamName?: string;
-  studentName: string;
+  student_name: any;
+
+  team_name?: string;
   email: string;
   college: string;
   city: string;
-  amritaCBEStudent: boolean;
+  is_amrita_student: boolean;
 }
 
 export const OrganizerService = {
