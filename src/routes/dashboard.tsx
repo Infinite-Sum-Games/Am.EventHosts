@@ -5,6 +5,7 @@ import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
 import { DashboardHeader } from "@/components/dashboard";
 import EventTableView from "@/components/event-table";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   children: ReactNode;
@@ -24,8 +25,21 @@ export function ProtectedLayout({ children }: Props) {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        Loading Please Wait...
+      <div className="flex h-screen w-full flex-col items-center justify-center bg-background">
+        <div className="relative flex items-center justify-center">
+          <div className="relative rounded-full bg-primary p-4 text-primary-foreground">
+            <Loader2 className="h-7 w-7 animate-spin" />
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <h2 className="text-xl font-semibold tracking-tight">
+            Anokha 2026 Organizer Console
+          </h2>
+          <p className="text-sm text-muted-foreground animate-pulse">
+            Loading...
+          </p>
+        </div>
       </div>
     );
   }
