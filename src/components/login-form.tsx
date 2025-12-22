@@ -69,10 +69,13 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome to Organiser Console</CardTitle>
+          <CardTitle className="text-xl">
+            Welcome to Organiser Console
+          </CardTitle>
           <CardDescription>
-            Login with your college official email. Contact the dev team for
-            password if you don't have one.
+            login with organizer credentials. If you do not have it already,
+            please contact TCW - Technical Competitions and Workshops for the
+            same.
           </CardDescription>
         </CardHeader>
         <CardContent>
