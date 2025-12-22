@@ -8,6 +8,9 @@ import { nitro } from "nitro/vite";
 
 const config = defineConfig({
   base: "/live/",
+  server: {
+    port: 4173,
+  },
   plugins: [
     devtools(),
     nitro(),
