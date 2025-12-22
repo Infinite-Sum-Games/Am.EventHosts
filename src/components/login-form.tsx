@@ -70,7 +70,7 @@ export function LoginForm({
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">
-            Welcome to Organiser Console
+            Welcome to Anokha 2026 Organiser Portal
           </CardTitle>
           <CardDescription>
             login with organizer credentials. If you do not have it already,
