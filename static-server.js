@@ -1,7 +1,7 @@
 import { serve } from "bun";
 
 const DIST = "dist";
-const BASE = "/admin";
+const BASE = "/live";
 
 serve({
   port: 5173,
@@ -28,4 +28,4 @@ serve({
   },
 });
 
-console.log("Admin UI running on port 5173");
+console.log("Organiser UI running on port 3000");
