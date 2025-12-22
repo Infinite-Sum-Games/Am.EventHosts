@@ -39,22 +39,23 @@ export function LoginForm({
     const hashedPassword = await hashPassword(password);
 
     try {
-      const response = await axiosClient.post(api.LOGIN, {
-        email: email,
+      await axiosClient.post(api.LOGIN, {
+        email,
         password: hashedPassword,
       });
 
-      const data = response.data;
-
-      secureLocalStorage.clear();
-
-      const userInfo = {
-        userName: data.name,
-        userEmail: data.email,
-      };
-      secureLocalStorage.setItem("u", JSON.stringify(userInfo));
-      await new Promise((res) => setTimeout(res, 50));
       router.navigate({ to: "/dashboard", replace: true });
+
+      // const data = response.data;
+
+      // secureLocalStorage.clear();
+
+      // const userInfo = {
+      //   userName: data.name,
+      //   userEmail: data.email,
+      // };
+      // secureLocalStorage.setItem("u", JSON.stringify(userInfo));
+      // router.navigate({ to: "/dashboard", replace: true });
     } catch (err: any) {
       setErrorMsg(
         err.response?.data?.message || "Login failed. Please try again."

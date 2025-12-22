@@ -43,23 +43,23 @@ export default function LoginPage() {
 }
 
 export const Route = createFileRoute("/")({
-  beforeLoad: async () => {
-    try {
-      // Check if session exists
-      await axiosClient.get(api.SESSION);
+  // beforeLoad: async () => {
+  //   try {
+  //     // Check if session exists
+  //     await axiosClient.get(api.SESSION);
 
-      // If successful, THROW the redirect
-      throw redirect({
-        to: "/dashboard",
-      });
-    } catch (err) {
-      // If axios throws (401/403), we catch it here.
-      // If it's a redirect we just threw, re-throw it so the router handles it.
-      if (err instanceof Object && "to" in err) throw err;
+  //     // If successful, THROW the redirect
+  //     throw redirect({
+  //       to: "/dashboard",
+  //     });
+  //   } catch (err) {
+  //     // If axios throws (401/403), we catch it here.
+  //     // If it's a redirect we just threw, re-throw it so the router handles it.
+  //     if (err instanceof Object && "to" in err) throw err;
 
-      // Otherwise, return null to stay on the login page
-      return null;
-    }
-  },
+  //     // Otherwise, return null to stay on the login page
+  //     return null;
+  //   }
+  // },
   component: LoginPage,
 });
