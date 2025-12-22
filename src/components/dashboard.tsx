@@ -34,17 +34,18 @@ export function DashboardHeader() {
             variant="ghost"
             size="lg"
             className="text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all px-2 md:px-4 border"
-          >
-            <LogOut
-              className="h-8 w-8 md:mr-2"
-              onClick={(e) => {
-                e.preventDefault();
+            onClick={async () => {
+              try {
+                await axiosClient.get(api.LOGOUT);
+                router.navigate({ to: "/", replace: true });
                 secureLocalStorage.clear();
-                axiosClient.get(api.LOGOUT).then(() => {
-                  router.navigate({ to: "/", replace: true });
-                });
-              }}
-            />
+              } catch (err) {
+                console.error("Logout failed", err);
+                alert("Logout failed. Please try again.");
+              }
+            }}
+          >
+            <LogOut className="h-8 w-8 md:mr-2 z-50" />
             <span className="hidden md:inline">Logout</span>
           </Button>
         </div>
