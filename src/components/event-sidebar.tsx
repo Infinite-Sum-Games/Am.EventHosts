@@ -51,7 +51,7 @@ export function EventsSidebar({
     <div className="flex h-full w-80 flex-col border-r border-border bg-card/30 backdrop-blur-sm">
       <div className="border-b border-border bg-card/50 px-6 py-5">
         <div className="flex items-center gap-2 mb-1">
-          <CalendarIcon className="h-5 w-5 text-amber-400" />
+          <CalendarIcon className="h-5 w-5 text-amber-500" />
           <h2 className="text-lg font-semibold">Events</h2>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -80,7 +80,7 @@ export function EventsSidebar({
                   className={cn(
                     "font-semibold text-sm flex-1",
                     selectedEventId === event.id
-                      ? "text-amber-400"
+                      ? "text-amber-500"
                       : "text-foreground"
                   )}
                 >
