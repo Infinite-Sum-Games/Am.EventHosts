@@ -1,11 +1,11 @@
 import { serve } from "bun";
 
-const DIST = "dist";
+const DIST = ".output/public";
 const BASE = "/live";
 
 serve({
   port: 5173,
-  fetch(req) {
+  async fetch(req) {
     const url = new URL(req.url);
 
     if (!url.pathname.startsWith(BASE)) {
@@ -19,8 +19,7 @@ serve({
 
     const file = Bun.file(DIST + filePath);
 
-    // SPA fallback
-    if (!file.size) {
+    if (!(await file.exists())) {
       return new Response(Bun.file(DIST + "/index.html"));
     }
 
@@ -28,4 +27,4 @@ serve({
   },
 });
 
-console.log("Organiser UI running on port 3000");
+console.log("Organiser UI running on port 4173");
