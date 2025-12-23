@@ -1,8 +1,13 @@
-import { Link } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { Button } from "@/components/ui/button";
-import { FileQuestion, Home } from "lucide-react";
+import { FileQuestion, Home } from 'lucide-react';
 
-export function NotFound() {
+export const Route = createFileRoute('/not-found')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
   return (
     <div className="flex items-center justify-center min-h-screen overflow-hidden">
       <div className="flex flex-col items-center justify-center bg-muted/30 border border-muted rounded-lg py-12 px-6 max-w-md w-full text-center">
@@ -34,5 +39,5 @@ export function NotFound() {
         </div>
       </div>
     </div>
-  );
+  )
 }

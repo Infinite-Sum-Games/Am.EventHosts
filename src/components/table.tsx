@@ -1,9 +1,7 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useMemo, useState, useCallback } from "react";
-import { Settings2, Fuel as FunnelX, Search } from "lucide-react";
+import { Settings2, Fuel as FunnelX } from "lucide-react";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -24,8 +22,6 @@ import {
   type Filter,
   type FilterFieldConfig,
 } from "@/components/ui/filters";
-import { Input } from "@/components/ui/input";
-import { eventParticipants } from "@/data/draftData";
 import { Participant } from "@/services/organizer";
 
 export interface TableData {
@@ -42,7 +38,7 @@ interface TableTableProps {
   participants: Participant[];
 }
 
-export default function TableTable({ eventId,participants }: TableTableProps) {
+export default function TableTable({ participants }: TableTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -52,16 +48,16 @@ export default function TableTable({ eventId,participants }: TableTableProps) {
   const columnHelper = createColumnHelper<TableData>();
 
 
-    const tableData: TableData[] = useMemo(() => {
-      return (participants || []).map((p) => ({
-        teamName: p.team_name || "",
-        studentName: p.student_name,
-        email: p.email,
-        college: p.college,
-        city: p.city,
-        amritaCBEStudent: p.is_amrita_student,
-      }));
-    }, [participants]);
+  const tableData: TableData[] = useMemo(() => {
+    return (participants || []).map((p) => ({
+      teamName: p.team_name || "",
+      studentName: p.student_name,
+      email: p.email,
+      college: p.college,
+      city: p.city,
+      amritaCBEStudent: p.is_amrita_student,
+    }));
+  }, [participants]);
 
 
   const columns = [

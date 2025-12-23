@@ -1,26 +1,34 @@
 import { defineConfig } from "vite";
 import { devtools } from "@tanstack/devtools-vite";
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import viteTsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
-import { nitro } from "nitro/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import { fileURLToPath, URL } from "node:url";
 
-const config = defineConfig({
-  base: "/live/",
-  server: {
-    port: 4173,
-  },
-  plugins: [
-    devtools(),
-    nitro(),
-    viteTsConfigPaths({
-      projects: ["./tsconfig.json"],
-    }),
-    tailwindcss(),
-    tanstackStart(),
-    viteReact(),
-  ],
+export default defineConfig({
+	plugins: [
+		devtools(),
+		tanstackRouter({
+			target: "react",
+			autoCodeSplitting: true,
+		}),
+		viteReact(),
+		tailwindcss(),
+	],
+	base: "/live",
+	resolve: {
+		alias: {
+			"@": fileURLToPath(new URL("./src", import.meta.url)),
+		},
+	},
+	server: {
+		allowedHosts: true,
+		port: 4173,
+		proxy: {
+			"/api/v1": {
+				target: "http://localhost:9000",
+				changeOrigin: true,
+			},
+		},
+	},
 });
-
-export default config;

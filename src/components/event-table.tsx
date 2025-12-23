@@ -1,10 +1,8 @@
-"use client";
-
 import { useEffect, useState, useMemo } from "react";
 import { EventsSidebar } from "./event-sidebar";
 import TableTable from "./table";
-import SoloTable from "./solotable";
-import { Users, Calendar } from "lucide-react";
+import SoloTable from "./solo-table";
+import { Calendar } from "lucide-react";
 import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
 import type { Participant } from "@/services/organizer";
@@ -69,7 +67,7 @@ export default function EventTableView() {
 
     fetchParticipants();
   }, [selectedEventId]);
-  
+
 
   const selectedEvent = useMemo(
     () => events.find((e) => e.id === selectedEventId) ?? null,

@@ -1,8 +1,28 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 import { LoginForm } from "@/components/login-form";
-import { axiosClient } from "@/lib/axios";
-import { api } from "@/lib/api";
+
+export const Route = createFileRoute("/")({
+  // beforeLoad: async () => {
+  //   try {
+  //     // Check if session exists
+  //     await axiosClient.get(api.SESSION);
+
+  //     // If successful, THROW the redirect
+  //     throw redirect({
+  //       to: "/dashboard",
+  //     });
+  //   } catch (err) {
+  //     // If axios throws (401/403), we catch it here.
+  //     // If it's a redirect we just threw, re-throw it so the router handles it.
+  //     if (err instanceof Object && "to" in err) throw err;
+
+  //     // Otherwise, return null to stay on the login page
+  //     return null;
+  //   }
+  // },
+  component: LoginPage,
+});
 
 export default function LoginPage() {
   return (
@@ -41,25 +61,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-export const Route = createFileRoute("/")({
-  // beforeLoad: async () => {
-  //   try {
-  //     // Check if session exists
-  //     await axiosClient.get(api.SESSION);
-
-  //     // If successful, THROW the redirect
-  //     throw redirect({
-  //       to: "/dashboard",
-  //     });
-  //   } catch (err) {
-  //     // If axios throws (401/403), we catch it here.
-  //     // If it's a redirect we just threw, re-throw it so the router handles it.
-  //     if (err instanceof Object && "to" in err) throw err;
-
-  //     // Otherwise, return null to stay on the login page
-  //     return null;
-  //   }
-  // },
-  component: LoginPage,
-});

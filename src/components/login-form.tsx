@@ -13,7 +13,6 @@ import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { api } from "@/lib/api";
 import { axiosClient } from "@/lib/axios";
-import secureLocalStorage from "react-secure-storage";
 import { hashPassword } from "@/lib/hash";
 
 export function LoginForm({

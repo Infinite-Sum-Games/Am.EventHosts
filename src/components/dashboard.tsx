@@ -1,5 +1,3 @@
-"use client";
-
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import secureLocalStorage from "react-secure-storage";

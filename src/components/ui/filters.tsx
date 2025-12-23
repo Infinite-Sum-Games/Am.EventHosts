@@ -1,5 +1,3 @@
-'use client';
-
 import type React from 'react';
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import {
@@ -623,7 +621,7 @@ function FilterInput<T = unknown>({
 
 interface FilterRemoveButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof filterRemoveButtonVariants> {
+  VariantProps<typeof filterRemoveButtonVariants> {
   icon?: React.ReactNode;
 }
 
@@ -685,21 +683,21 @@ export interface FilterFieldConfig<T = unknown> {
   label?: string;
   icon?: React.ReactNode;
   type?:
-    | 'select'
-    | 'multiselect'
-    | 'date'
-    | 'daterange'
-    | 'text'
-    | 'number'
-    | 'numberrange'
-    | 'boolean'
-    | 'email'
-    | 'url'
-    | 'tel'
-    | 'time'
-    | 'datetime'
-    | 'custom'
-    | 'separator';
+  | 'select'
+  | 'multiselect'
+  | 'date'
+  | 'daterange'
+  | 'text'
+  | 'number'
+  | 'numberrange'
+  | 'boolean'
+  | 'email'
+  | 'url'
+  | 'tel'
+  | 'time'
+  | 'datetime'
+  | 'custom'
+  | 'separator';
   // Group-level configuration
   group?: string;
   fields?: FilterFieldConfig<T>[];

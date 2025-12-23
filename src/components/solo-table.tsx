@@ -1,9 +1,7 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useMemo, useState, useCallback } from "react";
-import { Settings2, Fuel as FunnelX, Search } from "lucide-react";
+import { Settings2, Fuel as FunnelX } from "lucide-react";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -41,7 +39,7 @@ interface TableTableProps {
   participants: Participant[];
 }
 
-export default function SoloTable({ eventId,participants}: TableTableProps) {
+export default function SoloTable({ eventId, participants }: TableTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -158,12 +156,12 @@ export default function SoloTable({ eventId,participants}: TableTableProps) {
   ];
   const filterFields = useMemo<FilterFieldConfig[]>(
     () => [
-    //   {
-    //     key: "teamName",
-    //     label: "Team Name",
-    //     type: "text",
-    //     placeholder: "Filter by team name...",
-    //   },
+      //   {
+      //     key: "teamName",
+      //     label: "Team Name",
+      //     type: "text",
+      //     placeholder: "Filter by team name...",
+      //   },
       {
         key: "studentName",
         label: "Student Name",
@@ -200,7 +198,7 @@ export default function SoloTable({ eventId,participants}: TableTableProps) {
     []
   );
 
-    // const tableData = participants || [];
+  // const tableData = participants || [];
 
   // Apply filters to data
   const filteredData = useMemo(() => {

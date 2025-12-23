@@ -65,7 +65,7 @@ export function Dashboard() {
   );
 }
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/dashboard/")({
   // beforeLoad: async () => {
   //   try {
   //     const response = await axiosClient.get(api.SESSION);
