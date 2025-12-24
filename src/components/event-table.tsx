@@ -6,7 +6,7 @@ import { Calendar } from "lucide-react";
 import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
 import type { Participant } from "@/services/organizer";
-import { exportParticipantsAsCSV } from "@/lib/csv";
+
 
 interface BackendEvent {
   id: string;
