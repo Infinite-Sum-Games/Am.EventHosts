@@ -23,6 +23,7 @@ import {
   type FilterFieldConfig,
 } from "@/components/ui/filters";
 import { Participant } from "@/services/organizer";
+import { exportTableDataAsCSV } from "@/lib/csv";
 
 export interface TableData {
   teamName: string;
@@ -354,6 +355,17 @@ export default function TableTable({ participants }: TableTableProps) {
               }
             />
           </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 border-border hover:bg-amber-500/10 hover:border-amber-500/40"
+                      onClick={() =>
+                        exportTableDataAsCSV(filteredData, "participants_export")
+                      }
+                      disabled={filteredData.length === 0}
+                    >
+                      Export CSV
+                    </Button>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex-1">
               <Filters
