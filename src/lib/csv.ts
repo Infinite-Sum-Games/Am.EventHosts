@@ -1,26 +1,24 @@
-import { Participant } from "./type";
-export function exportParticipantsAsCSV(
-  participants: Participant[],
-  eventName: string
+export function exportTableDataAsCSV<T extends Record<string, any>>(
+  rows: T[],
+  fileName: string
 ) {
-  if (!participants || participants.length === 0) return;
+  if (!rows || rows.length === 0) return;
 
-  // Convert objects → CSV rows
-  const headers = Object.keys(participants[0]);
+  const headers = Object.keys(rows[0]);
 
-  const csvRows = [
-    headers.join(","), // header row
-    ...participants.map((p) =>
-      headers.map((h) => JSON.stringify((p as any)[h] ?? "")).join(",")
+  const csv = [
+    headers.join(","),
+    ...rows.map((row) =>
+      headers.map((h) => JSON.stringify(row[h] ?? "")).join(",")
     ),
-  ];
+  ].join("\n");
 
-  const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${eventName.replace(/\s+/g, "_")}_participants.csv`;
+  a.download = `${fileName}.csv`;
   a.click();
 
   URL.revokeObjectURL(url);

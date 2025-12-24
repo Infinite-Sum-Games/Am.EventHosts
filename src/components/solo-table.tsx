@@ -25,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { eventParticipants } from "@/data/draftData";
 import { Participant } from "@/services/organizer";
+import { exportTableDataAsCSV } from "@/lib/csv";
 
 export interface TableData {
   studentName: string;
@@ -352,6 +353,18 @@ export default function SoloTable({ eventId, participants }: TableTableProps) {
               }
             />
           </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 border-border hover:bg-amber-500/10 hover:border-amber-500/40"
+            onClick={() =>
+              exportTableDataAsCSV(filteredData, "participants_export")
+            }
+            disabled={filteredData.length === 0}
+          >
+            Export CSV
+          </Button>
+
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex-1">
               <Filters

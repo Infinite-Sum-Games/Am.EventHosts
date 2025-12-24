@@ -6,6 +6,7 @@ import { Calendar } from "lucide-react";
 import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
 import type { Participant } from "@/services/organizer";
+import { exportParticipantsAsCSV } from "@/lib/csv";
 
 interface BackendEvent {
   id: string;
@@ -107,6 +108,19 @@ export default function EventTableView() {
                   : "Select an event from the sidebar to view participant details and manage registrations."}
               </p>
             </div>
+            {/* {selectedEvent && (
+              <button
+                onClick={() =>
+                  exportParticipantsAsCSV(
+                    participants[selectedEvent.id] || [],
+                    selectedEvent.name
+                  )
+                }
+                className="rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-black hover:bg-amber-400"
+              >
+                Export CSV
+              </button>
+            )} */}
           </div>
         </div>
 
