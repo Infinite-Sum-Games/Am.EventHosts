@@ -364,7 +364,7 @@ export default function TableTable({ participants }: TableTableProps) {
                       }
                       disabled={filteredData.length === 0}
                     >
-                      Export CSV
+                      Export to CSV
                     </Button>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex-1">

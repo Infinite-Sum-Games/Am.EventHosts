@@ -362,7 +362,7 @@ export default function SoloTable({ eventId, participants }: TableTableProps) {
             }
             disabled={filteredData.length === 0}
           >
-            Export CSV
+            Export to CSV
           </Button>
 
           <div className="flex items-center gap-3 flex-wrap">
