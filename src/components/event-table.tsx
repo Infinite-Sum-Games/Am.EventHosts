@@ -5,7 +5,7 @@ import SoloTable from "./solo-table";
 import { Calendar } from "lucide-react";
 import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
-import type { Participant } from "@/services/organizer";
+import type { Participant } from "@/types/participant";
 
 interface BackendEvent {
   id: string;
