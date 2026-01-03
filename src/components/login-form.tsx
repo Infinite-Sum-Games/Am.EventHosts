@@ -72,7 +72,7 @@ export function LoginForm({
             Welcome to Anokha 2026 Organiser Portal
           </CardTitle>
           <CardDescription>
-            login with organizer credentials. If you do not have it already,
+              Login with organizer credentials. If you do not have it already,
             please contact TCW - Technical Competitions and Workshops for the
             same.
           </CardDescription>
@@ -91,7 +91,7 @@ export function LoginForm({
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Enter your Amrita Email Address"
+                    placeholder="Enter organizer email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -105,7 +105,7 @@ export function LoginForm({
                   <Input
                     id="password"
                     type="password"
-                    placeholder="Enter your password"
+                    placeholder="Enter organizer password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
