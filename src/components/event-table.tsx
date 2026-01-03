@@ -7,7 +7,6 @@ import { axiosClient } from "@/lib/axios";
 import { api } from "@/lib/api";
 import type { Participant } from "@/services/organizer";
 
-
 interface BackendEvent {
   id: string;
   name: string;
@@ -75,16 +74,6 @@ export default function EventTableView() {
     [events, selectedEventId]
   );
 
-  const teamCount = useMemo(() => {
-    if (!selectedEvent || selectedEvent.is_group !== "GROUP") return 0;
-
-    const eventParticipants = participants[selectedEvent.id] || [];
-
-    const uniqueTeams = new Set(eventParticipants.map((p) => p.team_name));
-
-    return uniqueTeams.size;
-  }, [participants, selectedEvent]);
-
   return (
     <div className="flex h-full bg-background">
       {/* Sidebar */}
@@ -113,41 +102,11 @@ export default function EventTableView() {
               </div>
 
               <p className="text-muted-foreground max-w-3xl">
-                {selectedEvent ? (
-                  selectedEvent.is_group === "GROUP" ? (
-                    <>
-                      Teams: <span className="font-medium">{teamCount}</span> •
-                      Participants:{" "}
-                      <span className="font-medium">
-                        {participants[selectedEvent.id]?.length || 0}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      Participants:{" "}
-                      <span className="font-medium">
-                        {participants[selectedEvent.id]?.length || 0}
-                      </span>
-                    </>
-                  )
-                ) : (
-                  "Select an event from the sidebar to view participant details and manage registrations."
-                )}
+                {selectedEvent
+                  ? `Participants: ${participants[selectedEvent.id]?.length || 0}`
+                  : "Select an event from the sidebar to view participant details and manage registrations."}
               </p>
             </div>
-            {/* {selectedEvent && (
-              <button
-                onClick={() =>
-                  exportParticipantsAsCSV(
-                    participants[selectedEvent.id] || [],
-                    selectedEvent.name
-                  )
-                }
-                className="rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-black hover:bg-amber-400"
-              >
-                Export CSV
-              </button>
-            )} */}
           </div>
         </div>
 
