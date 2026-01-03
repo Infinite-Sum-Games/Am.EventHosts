@@ -22,10 +22,9 @@ import {
   type Filter,
   type FilterFieldConfig,
 } from "@/components/ui/filters";
-// import { Input } from "@/components/ui/input";
-// import { eventParticipants } from "@/data/draftData";
-import { Participant } from "@/types/participents";
-import { exportTableDataAsCSV } from "@/lib/csv";
+import { Input } from "@/components/ui/input";
+import { eventParticipants } from "@/data/draftData";
+import { Participant } from "@/services/organizer";
 
 export interface TableData {
   studentName: string;
@@ -33,7 +32,6 @@ export interface TableData {
   college: string;
   city: string;
   amritaCBEStudent: boolean;
-  phoneNumber: string;
 }
 
 interface TableTableProps {
@@ -57,7 +55,6 @@ export default function SoloTable({ eventId, participants }: TableTableProps) {
       college: p.college,
       city: p.city,
       amritaCBEStudent: p.is_amrita_student,
-      phoneNumber: p.phone_number,
     }));
   }, [participants]);
 
@@ -96,19 +93,6 @@ export default function SoloTable({ eventId, participants }: TableTableProps) {
     columnHelper.accessor("email", {
       header: ({ column }) => (
         <DataGridColumnHeader title="Email" column={column} />
-      ),
-      cell: ({ getValue }) => (
-        <div className="text-muted-foreground">{String(getValue() || "")}</div>
-      ),
-      size: 220,
-      enableSorting: true,
-      enableHiding: true,
-      enableResizing: true,
-      enablePinning: true,
-    }),
-    columnHelper.accessor("phoneNumber", {
-      header: ({ column }) => (
-        <DataGridColumnHeader title="Phone Number" column={column} />
       ),
       cell: ({ getValue }) => (
         <div className="text-muted-foreground">{String(getValue() || "")}</div>
@@ -189,12 +173,6 @@ export default function SoloTable({ eventId, participants }: TableTableProps) {
         label: "Email",
         type: "email",
         placeholder: "Filter by email...",
-      },
-      {
-        key: "phoneNumber",
-        label: "Phone Number",
-        type: "text",
-        placeholder: "Filter by phone number...",
       },
       {
         key: "college",
@@ -374,18 +352,6 @@ export default function SoloTable({ eventId, participants }: TableTableProps) {
               }
             />
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-9 border-border hover:bg-amber-500/10 hover:border-amber-500/40"
-            onClick={() =>
-              exportTableDataAsCSV(filteredData, "participants_export")
-            }
-            disabled={filteredData.length === 0}
-          >
-            Export to CSV
-          </Button>
-
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex-1">
               <Filters
