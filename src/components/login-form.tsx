@@ -69,12 +69,10 @@ export function LoginForm({
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">
-            Welcome to Anokha 2026 Organiser Portal
+            Welcome to {import.meta.env.VITE_EVENT_NAME} {import.meta.env.VITE_EVENT_YEAR} Organiser Portal
           </CardTitle>
           <CardDescription>
-              Login with organizer credentials. If you do not have it already,
-            please contact TCW - Technical Competitions and Workshops for the
-            same.
+              Login with organizer credentials.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -124,10 +122,12 @@ export function LoginForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Visit Amrita 2026?{" "}
+                Visit {import.meta.env.VITE_EVENT_NAME}?{" "}
                 <a
-                  href="https://anokha.amrita.edu/"
+                  href={import.meta.env.VITE_EVENT_MAINPAGE_URL}
                   className="underline underline-offset-4"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Click here
                 </a>
