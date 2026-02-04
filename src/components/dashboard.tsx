@@ -15,7 +15,7 @@ export function DashboardHeader() {
           </div>
           <div className="flex flex-col">
             <h1 className="text-base md:text-xl font-bold tracking-tight text-foreground">
-              Anokha 2026
+              {import.meta.env.VITE_EVENT_NAME} {import.meta.env.VITE_EVENT_YEAR}
             </h1>
           </div>
         </div>

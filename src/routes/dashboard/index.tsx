@@ -34,7 +34,7 @@ export function ProtectedLayout({ children }: Props) {
 
         <div className="mt-8 flex flex-col items-center gap-2">
           <h2 className="text-xl font-semibold tracking-tight">
-            Anokha 2026 Organizer Console
+            {import.meta.env.VITE_EVENT_NAME} {import.meta.env.VITE_EVENT_YEAR} Organizer Console
           </h2>
           <p className="text-sm text-muted-foreground animate-pulse">
             Loading...
